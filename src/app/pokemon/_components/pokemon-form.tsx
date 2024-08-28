@@ -14,6 +14,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { Controller } from "react-hook-form";
 
@@ -31,13 +32,11 @@ export default function PokemonForm() {
     },
   });
 
-  const [, setId] = useQueryState("id");
-  const [, setSprite] = useQueryState("sprite");
+  const router = useRouter();
 
   const usePokemonFormSubmit = (data: PokemonSchema) => {
     console.log(data);
-    setId(data.id.toString());
-    setSprite(data.sprite);
+    router.push(`/pokemon?id=${data.id}&sprite=${data.sprite}`);
   };
 
   return (
