@@ -1,8 +1,8 @@
 "use client";
 import { useSafeForm } from "@/hooks/use-safe-form";
 import {
-  pokemonSchema,
   PokemonSchema,
+  pokemonSchema,
 } from "@/types/schema/pokemon-form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -10,11 +10,11 @@ import {
   FormControl,
   FormHelperText,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
 } from "@mui/material";
+import { useQueryState } from "nuqs";
 import { Controller } from "react-hook-form";
 
 export default function PokemonForm() {
@@ -31,8 +31,13 @@ export default function PokemonForm() {
     },
   });
 
-  const onSubmit = (data: PokemonSchema) => {
+  const [, setId] = useQueryState("id");
+  const [, setSprite] = useQueryState("sprite");
+
+  const usePokemonFormSubmit = (data: PokemonSchema) => {
     console.log(data);
+    setId(data.id.toString());
+    setSprite(data.sprite);
   };
 
   return (
@@ -40,7 +45,7 @@ export default function PokemonForm() {
       container
       component="form"
       spacing={2}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(usePokemonFormSubmit)}
     >
       <Grid item xs={6}>
         <FormControl fullWidth>
