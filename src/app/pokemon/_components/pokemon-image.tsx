@@ -23,14 +23,21 @@ const PokemonImage = async (props: Props) => {
   const result: pokemonResponse = await fetchPokemonData(props.id);
 
   return (
-    <Grid>
-      <p>選択した図鑑番号のポケモン</p>
-      <Image
-        src={result.sprites[props.sprite]}
-        alt="ポケモン"
-        width={200}
-        height={200}
-      />
+    <Grid item xs={12}>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <p>選択した図鑑番号のポケモン</p>
+        <Image
+          src={result.sprites[props.sprite]}
+          alt="ポケモン"
+          width={200}
+          height={200}
+        />
+      </Grid>
     </Grid>
   );
 };
