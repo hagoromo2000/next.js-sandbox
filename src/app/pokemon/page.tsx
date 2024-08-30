@@ -1,9 +1,9 @@
 import { pokemonResponse } from "@/types/pokemon-response";
 import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
-import { CircularProgress, Grid } from "@mui/material";
-import { Suspense } from "react";
+import { Grid } from "@mui/material";
 import PokemonForm from "./_components/pokemon-form";
 import PokemonImage from "./_components/pokemon-image";
+import { fetchPokemonData } from "./_utils/fetch-pokemon-data";
 
 type Props = {
   searchParams: {
@@ -12,19 +12,19 @@ type Props = {
   };
 };
 
-export default function Pokemon({
-  searchParams: { id = "1", sprite = "front_default" },
-}: Props) {
+export default async function Pokemon({ searchParams }: Props) {
+  // デフォルト値をコンポーネント内で設定
+  const id = searchParams.id ?? "1";
+  const sprite = searchParams.sprite ?? "front_default";
+  const pokemonImageData: pokemonResponse = await fetchPokemonData(id);
+
   return (
     <Grid container direction="column" spacing={6}>
       <Grid item>
         <PokemonForm />
       </Grid>
       <Grid item>
-        <Suspense fallback={<CircularProgress />}>
-          {/* @ts-expect-error Server Component https://zenn.dev/waarrk/articles/23732d8c4102d0 */}
-          <PokemonImage id={id} sprite={sprite} />
-        </Suspense>
+        <PokemonImage pokemonImageData={pokemonImageData} sprite={sprite} />
       </Grid>
     </Grid>
   );

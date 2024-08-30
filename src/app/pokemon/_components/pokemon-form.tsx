@@ -85,9 +85,11 @@ export default function PokemonForm() {
       </Grid>
       <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="center">
-          <Button variant="contained" color="primary" type="submit">
-            画像を表示
-          </Button>
+          <Grid item>
+            <Button variant="contained" color="primary" type="submit">
+              画像を表示
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
