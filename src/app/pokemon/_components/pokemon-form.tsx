@@ -15,7 +15,6 @@ import {
   TextField,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
 import { Controller } from "react-hook-form";
 
 export default function PokemonForm() {
