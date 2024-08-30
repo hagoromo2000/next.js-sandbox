@@ -1,22 +1,32 @@
+import { pokemonResponse } from "@/types/pokemon-response";
+import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
 import { Grid } from "@mui/material";
 import Image from "next/image.js";
-import { FC } from "react";
+import { usePokemonData } from "../hooks/use-pokemon-data";
 
 type Props = {
-  data?: any;
-  sprite: string | null;
+  id: string;
+  sprite: PokemonSchema["sprite"];
+};
+const sleep = async (ms: number) => {
+  return new Promise((res) => setTimeout(res, ms));
 };
 
-const PokemonImage: FC<Props> = (props) => {
-  if (!props.data || !props.sprite) {
+const PokemonImage = async (props: Props) => {
+  console.log("ServerComponentを実行しています(sleepの前)");
+
+  // データの取得をイメージ
+  await sleep(3000);
+  if (!props.id || !props.sprite) {
     return null;
   }
-  console.log(props.data.sprites[props.sprite]);
+  const result: pokemonResponse = await usePokemonData(props.id);
+
   return (
     <Grid>
       <p>選択した図鑑番号のポケモン</p>
       <Image
-        src={props.data.sprites[props.sprite]}
+        src={result.sprites[props.sprite]}
         alt="ポケモン"
         width={200}
         height={200}

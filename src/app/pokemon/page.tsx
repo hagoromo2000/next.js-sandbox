@@ -1,25 +1,30 @@
-import { Grid } from "@mui/material";
-import { usePokemonData } from "./hooks/use-pokemon-data";
+import { pokemonResponse } from "@/types/pokemon-response";
+import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
+import { CircularProgress, Grid } from "@mui/material";
+import { Suspense } from "react";
 import PokemonForm from "./_components/pokemon-form";
 import PokemonImage from "./_components/pokemon-image";
 
-export default async function Pokemon({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | undefined };
-}) {
-  const params = new URLSearchParams();
-  params.set("id", searchParams.id ?? "1");
-  params.set("sprite", searchParams.sprite ?? "front_default");
-  const result: any = await usePokemonData(params);
-  const sprite = searchParams.sprite ?? "front_default";
+type Props = {
+  searchParams: {
+    id?: string;
+    sprite?: PokemonSchema["sprite"];
+  };
+};
+
+export default function Pokemon({
+  searchParams: { id = "1", sprite = "front_default" },
+}: Props) {
   return (
     <Grid container direction="column" spacing={6}>
       <Grid item>
         <PokemonForm />
       </Grid>
       <Grid item>
-        <PokemonImage data={result} sprite={sprite} />
+        <Suspense fallback={<CircularProgress />}>
+          {/* @ts-expect-error Server Component https://zenn.dev/waarrk/articles/23732d8c4102d0 */}
+          <PokemonImage id={id} sprite={sprite} />
+        </Suspense>
       </Grid>
     </Grid>
   );

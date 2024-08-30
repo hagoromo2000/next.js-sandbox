@@ -1,8 +1,7 @@
 import fetcher from "@/lib/fetcher";
 
-export const usePokemonData = (params: URLSearchParams) => {
-  const pokemonId = params.get("id");
-  const endpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+export const usePokemonData = (id: string) => {
+  const endpoint = `https://pokeapi.co/api/v2/pokemon/${id}`;
   const result = fetcher(endpoint);
   return result;
 };
