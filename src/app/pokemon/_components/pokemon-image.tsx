@@ -2,7 +2,7 @@ import { pokemonResponse } from "@/types/pokemon-response";
 import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
 import { Grid } from "@mui/material";
 import Image from "next/image.js";
-import { usePokemonData } from "../hooks/use-pokemon-data";
+import { fetchPokemonData } from "../_utils/fetch-pokemon-data";
 
 type Props = {
   id: string;
@@ -20,7 +20,7 @@ const PokemonImage = async (props: Props) => {
   if (!props.id || !props.sprite) {
     return null;
   }
-  const result: pokemonResponse = await usePokemonData(props.id);
+  const result: pokemonResponse = await fetchPokemonData(props.id);
 
   return (
     <Grid>
