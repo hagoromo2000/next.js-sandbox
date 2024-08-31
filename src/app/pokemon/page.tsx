@@ -1,9 +1,8 @@
-import { pokemonResponse } from "@/types/pokemon-response";
 import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
+import { Suspense } from "react";
 import PokemonForm from "./_components/pokemon-form";
 import PokemonImage from "./_components/pokemon-image";
-import { fetchPokemonData } from "./_utils/fetch-pokemon-data";
 
 type Props = {
   searchParams: {
@@ -12,11 +11,10 @@ type Props = {
   };
 };
 
-export default async function Pokemon({ searchParams }: Props) {
+export default function Pokemon({ searchParams }: Props) {
   // デフォルト値をコンポーネント内で設定
   const id = searchParams.id ?? "1";
   const sprite = searchParams.sprite ?? "front_default";
-  const pokemonImageData: pokemonResponse = await fetchPokemonData(id);
 
   return (
     <Grid container direction="column" spacing={6}>
@@ -24,7 +22,13 @@ export default async function Pokemon({ searchParams }: Props) {
         <PokemonForm />
       </Grid>
       <Grid item>
-        <PokemonImage pokemonImageData={pokemonImageData} sprite={sprite} />
+        <Suspense
+          key={JSON.stringify(searchParams)}
+          fallback={<CircularProgress />}
+        >
+          {/* @ts-expect-error Server Component https://qiita.com/joinus_ibuki/items/f6c5692496b50d835315*/}
+          <PokemonImage id={id} sprite={sprite} />
+        </Suspense>
       </Grid>
     </Grid>
   );
