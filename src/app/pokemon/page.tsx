@@ -12,7 +12,6 @@ type Props = {
 };
 
 export default function Pokemon({ searchParams }: Props) {
-  // デフォルト値をコンポーネント内で設定
   const id = searchParams.id ?? "1";
   const sprite = searchParams.sprite ?? "front_default";
 
@@ -22,13 +21,22 @@ export default function Pokemon({ searchParams }: Props) {
         <PokemonForm />
       </Grid>
       <Grid item>
-        <Suspense
-          key={JSON.stringify(searchParams)}
-          fallback={<CircularProgress />}
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
         >
-          {/* @ts-expect-error Server Component https://qiita.com/joinus_ibuki/items/f6c5692496b50d835315*/}
-          <PokemonImage id={id} sprite={sprite} />
-        </Suspense>
+          <Grid item>
+            <Suspense
+              key={JSON.stringify(searchParams)}
+              fallback={<CircularProgress />}
+            >
+              {/* @ts-expect-error Server Component https://qiita.com/joinus_ibuki/items/f6c5692496b50d835315*/}
+              <PokemonImage id={id} sprite={sprite} />
+            </Suspense>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
