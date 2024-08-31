@@ -55,7 +55,17 @@ export default function PokemonForm() {
                 {...field}
                 id="id"
                 variant="outlined"
-                type="number"
+                type="text"
+                inputProps={{
+                  inputMode: "numeric",
+                  pattern: "[1-9][0-9]*",
+                }}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === "" || /^[1-9][0-9]*$/.test(value)) {
+                    field.onChange(value);
+                  }
+                }}
                 error={!!errors.id}
                 helperText={
                   errors.id ? errors.id.message : "図鑑Noを選択してください"
@@ -85,9 +95,11 @@ export default function PokemonForm() {
       </Grid>
       <Grid item xs={12}>
         <Grid container alignItems="center" justifyContent="center">
-          <Button variant="contained" color="primary" type="submit">
-            画像を表示
-          </Button>
+          <Grid item>
+            <Button variant="contained" color="primary" type="submit">
+              画像を表示
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
