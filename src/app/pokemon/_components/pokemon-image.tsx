@@ -5,7 +5,7 @@ import Image from "next/image.js";
 import { fetchPokemonData } from "../_utils/fetch-pokemon-data";
 
 type Props = {
-  id: string;
+  id: PokemonSchema["id"];
   sprite: PokemonSchema["sprite"];
 };
 
