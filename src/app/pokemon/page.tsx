@@ -32,7 +32,6 @@ export default function Pokemon({ searchParams }: Props) {
               key={JSON.stringify(searchParams)}
               fallback={<CircularProgress />}
             >
-              {/* @ts-expect-error Server Component https://qiita.com/joinus_ibuki/items/f6c5692496b50d835315*/}
               <PokemonImage id={id} sprite={sprite} />
             </Suspense>
           </Grid>
