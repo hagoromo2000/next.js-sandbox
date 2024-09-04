@@ -20,6 +20,7 @@ const PokemonImage = async (props: Props) => {
           <Image
             src={pokemonImageData.sprites[props.sprite]}
             alt="ポケモン"
+            priority
             width={200}
             height={200}
           />
