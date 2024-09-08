@@ -1,8 +1,9 @@
 import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
 import { CircularProgress, Grid } from "@mui/material";
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import PokemonForm from "./_components/pokemon-form";
 import PokemonImage from "./_components/pokemon-image";
+// import { lazy } from "react";
 
 // const LazyPokemonImage = lazy(() => import("./_components/pokemon-image"));
 
