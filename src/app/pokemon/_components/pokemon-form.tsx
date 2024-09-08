@@ -15,6 +15,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { parseAsInteger, parseAsStringEnum, useQueryStates } from "nuqs";
 import { Controller } from "react-hook-form";
 
 export default function PokemonForm() {
@@ -31,11 +32,28 @@ export default function PokemonForm() {
     },
   });
 
-  const router = useRouter();
+  const [_, setPokemonCondition] = useQueryStates(
+    {
+      id: parseAsInteger.withDefault(1),
+      sprite: parseAsStringEnum([
+        "front_default",
+        "back_default",
+        "front_shiny",
+        "back_shiny",
+      ]).withDefault("front_default"),
+    },
+    {
+      shallow: false,
+      history: "push",
+    }
+  );
 
   const usePokemonFormSubmit = (data: PokemonSchema) => {
     console.log(data);
-    router.push(`/pokemon?id=${data.id}&sprite=${data.sprite}`);
+    setPokemonCondition({
+      id: data.id,
+      sprite: data.sprite,
+    });
   };
 
   return (

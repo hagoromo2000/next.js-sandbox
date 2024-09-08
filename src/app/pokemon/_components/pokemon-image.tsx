@@ -3,14 +3,12 @@ import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
 import { Box } from "@mui/material";
 import Image from "next/image.js";
 import { fetchPokemonData } from "../_utils/fetch-pokemon-data";
+import { pokemonSearchParamsCache } from "@/types/pokemon-search-params";
 
-type Props = {
-  id: string;
-  sprite: PokemonSchema["sprite"];
-};
-
-const PokemonImage = async (props: Props) => {
-  const pokemonImageData: pokemonResponse = await fetchPokemonData(props.id);
+const PokemonImage = async () => {
+  const id = pokemonSearchParamsCache.get("id");
+  const sprite = pokemonSearchParamsCache.get("sprite");
+  const pokemonImageData: pokemonResponse = await fetchPokemonData(id);
 
   return (
     <Box>
@@ -18,7 +16,7 @@ const PokemonImage = async (props: Props) => {
         <>
           <p>選択した図鑑番号のポケモン</p>
           <Image
-            src={pokemonImageData.sprites[props.sprite]}
+            src={pokemonImageData.sprites[sprite]}
             alt="ポケモン"
             width={200}
             height={200}
