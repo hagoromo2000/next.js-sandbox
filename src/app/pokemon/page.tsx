@@ -1,8 +1,10 @@
 import { PokemonSchema } from "@/types/schema/pokemon-form-schema";
 import { CircularProgress, Grid } from "@mui/material";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import PokemonForm from "./_components/pokemon-form";
 import PokemonImage from "./_components/pokemon-image";
+
+// const LazyPokemonImage = lazy(() => import("./_components/pokemon-image"));
 
 type Props = {
   searchParams: {
@@ -32,7 +34,7 @@ export default function Pokemon({ searchParams }: Props) {
               key={JSON.stringify(searchParams)}
               fallback={<CircularProgress />}
             >
-              {/* @ts-expect-error Server Component https://qiita.com/joinus_ibuki/items/f6c5692496b50d835315*/}
+              {/* <LazyPokemonImage id={id} sprite={sprite} /> */}
               <PokemonImage id={id} sprite={sprite} />
             </Suspense>
           </Grid>
