@@ -3,6 +3,9 @@ import { Suspense } from "react";
 import PokemonForm from "./_components/pokemon-form";
 import { searchParamsCache } from "@/types/search-params";
 import PokemonImage from "./_components/pokemon-image";
+// import { lazy } from "react";
+
+// const LazyPokemonImage = lazy(() => import("./_components/pokemon-image"));
 
 // コンポーネントを遅延読み込みする場合はlazyを使用する（該当コンポーネントの読み込みをレンダリングされるまで延期させる）
 // https://react.dev/reference/react/lazy
@@ -33,7 +36,6 @@ export default function Pokemon({ searchParams }: Props) {
               key={JSON.stringify(searchParams)}
               fallback={<CircularProgress />}
             >
-              {/* 「型 'Promise<Element>' を型 'ReactNode' に割り当てることはできません。」という型エラー出る場合はLazyを使用する */}
               {/* <LazyPokemonImage id={id} sprite={sprite} /> */}
               <PokemonImage id={id} sprite={sprite} />
             </Suspense>
